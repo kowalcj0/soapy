@@ -24,7 +24,7 @@ import labs.tests.json.JSONHandlerScenarioSteps
  * Time: 17:22
  * To change this template use File | Settings | File Templates.
  */
-class ScriptLibEmbedder extends Embedder {
+class SoapyEmbedder extends Embedder {
 
     @Override
     public EmbedderControls embedderControls() {
@@ -33,7 +33,7 @@ class ScriptLibEmbedder extends Embedder {
 
     @Override
     public Configuration configuration() {
-        Class<? extends ScriptLibEmbedder> embedderClass = this.getClass();
+        Class<? extends SoapyEmbedder> embedderClass = this.getClass();
         return new MostUsefulConfiguration()
                 .useStoryLoader(new LoadFromClasspath(embedderClass.getClassLoader()))
                 .useStoryReporterBuilder(new StoryReporterBuilder()
