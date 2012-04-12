@@ -1,0 +1,11 @@
+#vim
+*.swp
+
+#intellij idea
+*.iml
+*.ipr
+*.iws
+
+/logs
+/target
+/.idea
