@@ -8,6 +8,18 @@
     <artifactId>soapy</artifactId>
     <packaging>jar</packaging>
     <version>1.0</version>
+    <name>Yell Labs Groovy helper library for SoapUI</name>
+
+    <properties>
+        <jbehave.core.version>3.6</jbehave.core.version>
+        <jbehave.ignore.failures>true</jbehave.ignore.failures>
+        <jbehave.maven.plugin>3.6.1</jbehave.maven.plugin>
+        <jbehave.threads>1</jbehave.threads>
+        <jbehave.skip>false</jbehave.skip>
+        <jbehave.threads>1</jbehave.threads>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
 
     <repositories>
         <repository>
@@ -25,15 +37,35 @@
         </repository>
     </repositories>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <ignore.failures>true</ignore.failures>
-        <meta.filter></meta.filter>
-        <threads>1</threads>
-        <skip>false</skip>
-        <stories>**/GroovyScriptLibStories.groovy</stories>
-    </properties>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>codehausSnapshots</id>
+            <name>Codehaus Snapshots</name>
+            <releases>
+                <enabled>false</enabled>
+                <updatePolicy>always</updatePolicy>
+                <checksumPolicy>warn</checksumPolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+                <checksumPolicy>fail</checksumPolicy>
+            </snapshots>
+            <url>https://nexus.codehaus.org/content/groups/snapshots-group</url>
+            <layout>default</layout>
+        </pluginRepository>
+    </pluginRepositories>
 
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.hamcrest</groupId>
+                <artifactId>hamcrest-library</artifactId>
+                <version>1.2.1</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <dependency>
@@ -52,12 +84,22 @@
             <artifactId>junit</artifactId>
             <version>4.9</version>
         </dependency>
-<!--        <dependency>
-            <groupId>org.codehaus.groovy</groupId>
-            <artifactId>groovy-all</artifactId>
-            <version>1.8.6</version>
-            <scope>test</scope>
-        </dependency>-->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit-dep</artifactId>
+            <version>4.10</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.hamcrest</groupId>
+                    <artifactId>hamcrest-core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-all</artifactId>
+            <version>1.1</version>
+        </dependency>
         <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
@@ -83,13 +125,13 @@
         <dependency>
             <groupId>org.jbehave</groupId>
             <artifactId>jbehave-core</artifactId>
-            <version>3.6</version>
+            <version>${jbehave.core.version}</version>
         </dependency>
-<!--        <dependency>
-          <groupId>org.jbehave</groupId>
-          <artifactId>jbehave</artifactId>
-          <version>3.6.1</version>
-          </dependency>-->
+        <dependency>
+            <groupId>org.jbehave</groupId>
+            <artifactId>jbehave-navigator</artifactId>
+            <version>3.6.1</version>
+        </dependency>
         <dependency>
             <groupId>com.googlecode.json-simple</groupId>
             <artifactId>json-simple</artifactId>
@@ -118,62 +160,112 @@
 
     <build>
         <resources>
-            <resource>
+<!--            <resource>
                 <directory>${basedir}/src/main/groovy</directory>
                 <filtering>false</filtering>
+               &lt;!&ndash; <targetPath>src/main/groovy</targetPath>&ndash;&gt;
+            </resource>
+            <resource>
+                <directory>${basedir}/src/test/groovy</directory>
+                <filtering>false</filtering>
+               &lt;!&ndash; <targetPath>src/test/groovy</targetPath>&ndash;&gt;
+            </resource>-->
+            <resource>
+                <directory>${basedir}/src/test/resources/stories</directory>
+                <filtering>false</filtering>
+                <targetPath>stories</targetPath>
             </resource>
         </resources>
-<!--        <plugins>
-
-        </plugins>-->
         <pluginManagement>
             <plugins>
                 <plugin>
                     <groupId>org.jbehave</groupId>
                     <artifactId>jbehave-maven-plugin</artifactId>
-                    <version>3.6.1</version>
+                    <version>${jbehave.maven.plugin}</version>
                 </plugin>
-                <!--This plugin's configuration is used to store Eclipse m2e settings
-      only. It has no influence on the Maven build itself. -->
                 <plugin>
-                    <groupId>org.eclipse.m2e</groupId>
-                    <artifactId>lifecycle-mapping</artifactId>
-                    <version>1.0.0</version>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>2.3.2</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>2.4</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.gmaven</groupId>
+                    <artifactId>gmaven-plugin</artifactId>
+                    <version>1.4</version>
                     <configuration>
-                        <lifecycleMappingMetadata>
-                            <pluginExecutions>
-                                <pluginExecution>
-                                    <pluginExecutionFilter>
-                                        <groupId>org.jbehave</groupId>
-                                        <artifactId>jbehave-maven-plugin</artifactId>
-                                        <versionRange>[3.5-SNAPSHOT,)</versionRange>
-                                        <goals>
-                                            <goal>unpack-view-resources</goal>
-                                        </goals>
-                                    </pluginExecutionFilter>
-                                    <action>
-                                        <ignore></ignore>
-                                    </action>
-                                </pluginExecution>
-                            </pluginExecutions>
-                        </lifecycleMappingMetadata>
+                        <providerSelection>1.7</providerSelection>
                     </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.codehaus.gmaven.runtime</groupId>
+                            <artifactId>gmaven-runtime-1.7</artifactId>
+                            <version>1.4</version>
+                            <exclusions>
+                                <exclusion>
+                                    <groupId>org.codehaus.groovy</groupId>
+                                    <artifactId>groovy-all</artifactId>
+                                </exclusion>
+                            </exclusions>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.codehaus.groovy</groupId>
+                            <artifactId>groovy-all</artifactId>
+                            <version>1.8.6</version>
+                        </dependency>
+                    </dependencies>
                 </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
-
-            <!-- Unpack view resources, defined as dependencies -->
             <plugin>
-                <groupId>org.jbehave</groupId>
-                <artifactId>jbehave-maven-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <!-- Skip the normal tests, we'll run them in the integration-test
+                   phase -->
+                    <skip>false</skip>
+                </configuration>
                 <executions>
                     <execution>
-                        <id>unpack-view-resources</id>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                        <configuration>
+                            <skip>false</skip>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>unpack-resources-core</id>
                         <phase>process-resources</phase>
                         <goals>
-                            <goal>unpack-view-resources</goal>
+                            <goal>unpack</goal>
                         </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/jbehave/view</outputDirectory>
+                            <overWriteReleases>true</overWriteReleases>
+                            <overWriteSnapshots>true</overWriteSnapshots>
+                            <excludes>**/*.class</excludes>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.jbehave</groupId>
+                                    <artifactId>jbehave-navigator</artifactId>
+                                    <version>3.6.1</version>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -183,39 +275,6 @@
                 <version>2.6.0-01</version>
                 <extensions>true</extensions>
             </plugin>
-
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>build-helper-maven-plugin</artifactId>
-                <version>1.5</version>
-                <executions>
-                    <execution>
-                        <id>add-source</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>add-source</goal>
-                        </goals>
-                        <configuration>
-                            <sources>
-                                <source>src/main/groovy</source>
-                            </sources>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>add-test-source</id>
-                        <phase>generate-test-sources</phase>
-                        <goals>
-                            <goal>add-test-source</goal>
-                        </goals>
-                        <configuration>
-                            <sources>
-                                <source>src/test/groovy</source>
-                            </sources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.3.2</version>
@@ -231,7 +290,66 @@
                     </dependency>
                 </dependencies>
             </plugin>
-
+            <!-- Unpack view resources, defined as dependencies -->
+            <plugin>
+                <groupId>org.jbehave</groupId>
+                <artifactId>jbehave-maven-plugin</artifactId>
+                <version>${jbehave.core.version}</version>
+                <executions>
+                    <execution>
+                        <id>unpack-view-resources</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>unpack-view-resources</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>embeddable-stories</id>
+                        <phase>integration-test</phase>
+                        <configuration>
+                            <sourceDirectory>src/main/groovy</sourceDirectory>
+                            <testSourceDirectory>src/test/groovy</testSourceDirectory>
+                            <scope>test</scope>
+                            <includes>
+                                <include>**/crap*</include>
+                            </includes>
+                            <excludes />
+                            <generateViewAfterStories>true</generateViewAfterStories>
+                            <ignoreFailureInStories>true</ignoreFailureInStories>
+                            <ignoreFailureInView>false</ignoreFailureInView>
+                            <metaFilters>
+                                <metaFilter></metaFilter>
+                            </metaFilters>
+                            <threads>1</threads>
+                            <skip>false</skip>
+                        </configuration>
+                        <goals>
+                            <goal>run-stories-with-annotated-embedder</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.jbehave</groupId>
+                <artifactId>jbehave-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <!-- define executions as normal -->
+                        <configuration>
+                            <metaFilters>
+                                <metaFilter>"groovy: lang != 'java'"</metaFilter>
+                            </metaFilters>
+                        </configuration>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.codehaus.groovy</groupId>
+                        <artifactId>groovy-all</artifactId>
+                        <version>1.8.4</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
         </plugins>
     </build>
 

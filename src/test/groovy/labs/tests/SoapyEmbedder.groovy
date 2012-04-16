@@ -16,6 +16,9 @@ import org.jbehave.core.steps.InstanceStepsFactory
 import static org.jbehave.core.reporters.Format.*
 
 import labs.tests.json.JSONHandlerScenarioSteps
+import org.junit.runner.RunWith
+import org.jbehave.core.junit.AnnotatedEmbedderRunner
+import java.lang.annotation.Annotation
 
 /**
  * Created with IntelliJ IDEA.
@@ -24,6 +27,7 @@ import labs.tests.json.JSONHandlerScenarioSteps
  * Time: 17:22
  * To change this template use File | Settings | File Templates.
  */
+@RunWith(AnnotatedEmbedderRunner.class)
 class SoapyEmbedder extends Embedder {
 
     @Override
