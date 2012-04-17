@@ -34,7 +34,6 @@ class JSONHandlerScenarioSteps extends Steps {
 
     @Given("a JSON array: <jsonStringArray>")
     public void parserArray(@Named("jsonStringArray") String jsonStringArray) {
-        System.out.print("Parsing string: '"+jsonStringArray+"'\n");
         logger.info("Parsing string: '"+jsonStringArray+"'\n");
         parsedJSON = jsonHandler.parse(jsonStringArray);
     }
@@ -44,4 +43,15 @@ class JSONHandlerScenarioSteps extends Steps {
         Assert.assertTrue("Parsed string is not an JSON Array. It was parsed as: " + jsonHandler.getType(parsedJSON) + ". String passed to parsing was: " + parsedJSON, jsonHandler.isArray(parsedJSON));
     }
 
+
+    @Given("a JSON value: <jsonStringValue>")
+    public void parserValue(@Named("jsonStringValue") String jsonStringValue) {
+        logger.info("Parsing string: '"+jsonStringValue+"'\n");
+        parsedJSON = jsonHandler.parse(jsonStringValue);
+    }
+
+    @Then("I should get an JSON value object")
+    public void isJsonValue() {
+        Assert.assertTrue("Parsed string is not an JSON value. It was parsed as: " + jsonHandler.getType(parsedJSON) + ". String passed to parsing was: " + parsedJSON, jsonHandler.isValue(parsedJSON));
+    }
 }

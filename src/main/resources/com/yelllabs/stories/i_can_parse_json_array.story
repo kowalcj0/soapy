@@ -5,10 +5,9 @@ Meta:
 @color blue
 
 Narrative:
-In order to parse JSON Arrays
-As a Developer
+In order to parse JSON structures
 I want to be able to parse an JSON array
-
+An array is an ordered collection of values. An array begins with [ (left bracket) and ends with ] (right bracket). Values are separated by , (comma).
 
 Scenario: Parse successfully JSON array
 Given a JSON array: <jsonStringArray>
