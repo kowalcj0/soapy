@@ -1,5 +1,6 @@
 package com.yelllabs;
 
+import org.apache.log4j.Priority;
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.configuration.MostUsefulConfiguration;
 import org.jbehave.core.io.CodeLocations;
@@ -46,8 +47,11 @@ public class SoapyStories extends JUnitStories {
         Configuration configuration = configuration();
         useConfiguration(configuration);
 
+        //Priority priority = Priority.ERROR;
+
         final ThreadCaching primordialCaching = new ThreadCaching();
         MutablePicoContainer primordial = new PicoBuilder().withBehaviors(primordialCaching).build();
+        //primordial.addComponent(Priority.class, priority);
 
         final Storing store = (Storing) new Storing().wrap(new CompositeInjection(new ConstructorInjection(),
                 new SetterInjection("set", "setMetaClass")));

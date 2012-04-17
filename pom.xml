@@ -60,7 +60,6 @@
           <artifactId>log4j</artifactId>
           <version>${log4j.version}</version>
       </dependency>
-
       <dependency>
           <groupId>net.schmizz</groupId>
           <artifactId>sshj</artifactId>
@@ -156,6 +155,13 @@
         <groupId>org.jbehave</groupId>
         <artifactId>jbehave-maven-plugin</artifactId>
         <version>${jbehave.core.version}</version>
+        <dependencies>
+          <dependency>
+              <groupId>log4j</groupId>
+              <artifactId>log4j</artifactId>
+              <version>${log4j.version}</version>
+          </dependency>
+        </dependencies>
         <executions>
           <execution>
             <id>unpack-view-resources</id>

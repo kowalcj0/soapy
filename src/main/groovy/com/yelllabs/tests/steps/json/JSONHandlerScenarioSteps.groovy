@@ -4,6 +4,7 @@ import org.jbehave.core.steps.Steps
 import org.junit.Assert
 import org.jbehave.core.annotations.*
 import com.yelllabs.soapy.json.JSONHandler
+import org.apache.log4j.Logger
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,11 +17,12 @@ class JSONHandlerScenarioSteps extends Steps {
 
     private JSONHandler jsonHandler;
     private Object parsedJSON;
-    //private Logger logger;
+    private Logger logger;
 
 
     @BeforeScenario
     public void createJsonHandler() throws Exception {
+        logger = Logger.getLogger(JSONHandlerScenarioSteps.class);
         jsonHandler = new JSONHandler();
     }
 
@@ -33,6 +35,7 @@ class JSONHandlerScenarioSteps extends Steps {
     @Given("a JSON array: <jsonStringArray>")
     public void parserArray(@Named("jsonStringArray") String jsonStringArray) {
         System.out.print("Parsing string: '"+jsonStringArray+"'\n");
+        logger.info("Parsing string: '"+jsonStringArray+"'\n");
         parsedJSON = jsonHandler.parse(jsonStringArray);
     }
 

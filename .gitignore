@@ -1,6 +1,9 @@
 #vim
 *.swp
 
+#logs
+.log
+
 #intellij idea
 *.iml
 *.ipr
