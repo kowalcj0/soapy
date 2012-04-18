@@ -94,6 +94,16 @@
             <scope>system</scope>
             <systemPath>${basedir}/lib/xeger-1.0-SNAPSHOT.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>dk.brics.automaton</groupId>
+            <artifactId>automaton</artifactId>
+            <version>1.11-8</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.19</version>
+        </dependency>
         <!-- END - Dependencies needed by the scripts-->
 
     </dependencies>
@@ -189,6 +199,41 @@
                         <goals>
                             <goal>run-stories-as-embeddables</goal>
                         </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <artifactSet>
+                                <excludes>
+                                    <exclude>junit:*</exclude>
+                                    <exclude>log4j:*</exclude>
+                                    <exclude>xpp3:*</exclude>
+                                    <exclude>commons-collections:*</exclude>
+                                    <exclude>commons-io:*</exclude>
+                                    <exclude>commons-lang:*</exclude>
+                                    <exclude>org.slf4j:*</exclude>
+                                    <exclude>org.jbehave:*</exclude>
+                                    <exclude>org.jbehave.site:*</exclude>
+                                    <exclude>org.codehaus.groovy:*</exclude>
+                                    <exclude>org.hamcrest:*</exclude>
+                                    <exclude>org.codehaus.plexus:*</exclude>
+                                    <exclude>org.freemarker:freemarker:*</exclude>
+                                    <exclude>com.thoughtworks.paranamer:*</exclude>
+                                    <exclude>com.thoughtworks.xstream:*</exclude>
+                                    <exclude>org.picocontainer:*</exclude>
+                                </excludes>
+                            </artifactSet>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
