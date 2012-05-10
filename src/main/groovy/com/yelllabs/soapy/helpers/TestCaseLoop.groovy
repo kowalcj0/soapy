@@ -3,10 +3,14 @@ package com.yelllabs.soapy.helpers;
 import com.eviware.soapui.impl.wsdl.teststeps.WsdlTestStepResult
 import com.eviware.soapui.model.testsuite.TestStepResult.TestStepStatus
 
+import com.yelllabs.soapy.enums.Delay;
+
 /**
 * @brief 
 * @author Janusz Kowalczyk
 * @updated 2011-12-23 38115ja - updated run() method and added runTestStep() to simplyfiy the code
+* @updated 2012-05-10 38115ja - added import com.yelllabs.soapy.enums.Delay to /
+* differentiate it from com.yelllabs.soapy.helpers.Delay
 */
 class TestCaseLoop {
 

@@ -19,6 +19,13 @@
         <json-simple.version>1.1</json-simple.version>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>eviwarePluginRepository</id>
+            <url>http://www.eviware.com/repository/maven2/</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>org.jbehave</groupId>
@@ -81,6 +88,12 @@
             <version>4.5.0</version>
             <scope>provided</scope>
         </dependency>
+<!--        <dependency>
+            <groupId>eviware</groupId>
+            <artifactId>soapui-pro</artifactId>
+            <version>4.5.0</version>
+            <scope>provided</scope>
+        </dependency>-->
         <dependency>
             <groupId>eviware</groupId>
             <artifactId>soapui-xmlbeans</artifactId>
@@ -91,8 +104,8 @@
             <groupId>nl.flotsam</groupId>
             <artifactId>xeger</artifactId>
             <version>1.0-SNAPSHOT</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/xeger-1.0-SNAPSHOT.jar</systemPath>
+<!--            <scope>system</scope>
+            <systemPath>${basedir}/lib/xeger-1.0-SNAPSHOT.jar</systemPath>-->
         </dependency>
         <dependency>
             <groupId>dk.brics.automaton</groupId>
