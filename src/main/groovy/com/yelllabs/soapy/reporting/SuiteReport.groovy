@@ -93,7 +93,8 @@ class SuiteReport
 		def sDate = formatter.format(date);
 		
 		// create and flush report file
-		File f = new File(outputDir + '/' + sDate + reportFileName + '.html')
+        //File f = new File(outputDir + '/' + sDate + reportFileName + '.html')
+		File f = new File(outputDir + '/' + reportFileName + '.html')
 		f.write("")
 	
 		f.append('<HTML>\n<HEAD>\n<LINK REL="stylesheet" TYPE="text/css" HREF="stylesheet.css" TITLE="Style">\n</HEAD>\n<BODY>\n\n')

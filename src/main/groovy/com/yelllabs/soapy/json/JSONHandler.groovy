@@ -134,7 +134,7 @@ class JSONHandler {
   */
   public boolean hasEmptyValues(String key, Object val) {
 
-    if ( this.isValue( val ) ) {
+    if ( this.isValue(val) ) {
       if ( val.toString().isEmpty() ) {
         log.error("Key: '" +key+ "' is an empty JSON value!!!");
         return true;
@@ -142,7 +142,7 @@ class JSONHandler {
       log.info "key: '" + key + "' value: " + val
     }
     
-    if ( this.isArray( val )) {
+    if ( this.isArray(val)) {
       log.info "Analyzing array: '" + key + "' holding: " + val.size() + " element(s)."
       val.each{ v -> hasEmptyValues(key, v) }
     }

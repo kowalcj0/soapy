@@ -8,6 +8,8 @@ import com.eviware.soapui.impl.wsdl.teststeps.WsdlTestStepResult
 import com.eviware.soapui.model.testsuite.TestStepResult.TestStepStatus
 import org.apache.log4j.Logger
 
+import com.yelllabs.soapy.enums.Delay;
+
 /**
 * @brief A helper class to repeat steps until all of them pass
 * @author Janusz Kowalczyk 38115ja

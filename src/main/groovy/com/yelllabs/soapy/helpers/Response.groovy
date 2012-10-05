@@ -13,6 +13,7 @@ class Response
   private def request = null;
   private def response = null;
   private String rawResponse = "";
+  private def headers = "";
   private def log = null;
   private String testCaseName = "";
   private def gut = null;
@@ -40,6 +41,8 @@ class Response
     this.request = testRunner.testCase.testSteps[ responseStepName ].testRequest
     this.response = this.request.response.getContentAsXml();
     this.rawResponse = this.request.response.getContentAsString();
+    //this.headers = this.request.getResponseHeaders();
+    //log.info this.response;
     this.gut = new com.eviware.soapui.support.GroovyUtils( this.context )
     this.holder = gut.getXmlHolder( this.response );
     this.holder.namespaces["ns"] = this.holder.getNodeValue("//namespace::*[2]")
@@ -61,6 +64,7 @@ class Response
       this.request = messageExchange.getRestRequest();
       this.response = messageExchange.getResponseContentAsXml();
       this.rawResponse = messageExchange.getResponseContent();
+      this.headers = messageExchange.getResponseHeaders();
       this.gut = new com.eviware.soapui.support.GroovyUtils( this.context );
       this.holder = gut.getXmlHolder( this.response );
       this.holder.namespaces["ns"] = this.holder.getNodeValue( namespace );
@@ -84,6 +88,7 @@ class Response
       this.request = messageExchange.getRestRequest();
       this.response = messageExchange.getResponseContentAsXml();
       this.rawResponse = messageExchange.getResponseContent();
+      this.headers = messageExchange.getResponseHeaders();
       this.gut = new com.eviware.soapui.support.GroovyUtils( this.context );
       this.holder = gut.getXmlHolder( this.response );
       this.holder.namespaces["ns"] = this.holder.getNodeValue( namespace );
@@ -117,6 +122,10 @@ class Response
 
   public String getRawResponse() {
     return this.rawResponse;
+  }
+
+  public def getHeaders() {
+    return this.headers;
   }
 
   public def getReqProp(String propertyName ) {
