@@ -1,7 +1,6 @@
 package com.yelllabs.soapy.helpers;
 
-import com.eviware.soapui.impl.rest.support.RestRequestParamsPropertyHolder;
-import com.eviware.soapui.impl.wsdl.teststeps.RestTestRequest;
+import com.eviware.soapui.impl.wsdl.teststeps.RestResponseMessageExchange;
 import com.eviware.soapui.impl.wsdl.testcase.WsdlTestRunContext;
 import com.eviware.soapui.support.types.StringToStringsMap;
 import org.apache.log4j.Logger;
@@ -11,11 +10,13 @@ import org.apache.log4j.Logger;
 * @brief can create cURL command out of REST request.
 * @author 38115ja Janusz Kowalczyk
 * @created 2012-07-04
+* @updated 2012-11-14 Janusz Kowalczyk
 */
 class CurlGenerator{
 
-    private WsdlTestRunContext context;
-    private RestTestRequest request;
+    private def context;
+    private def messageExchange;
+    private def request;
     private Logger log;
     private String testCaseName;
     private String reqHttpMethod;
@@ -24,12 +25,19 @@ class CurlGenerator{
     private String reqEndpoint;
     private byte[] reqRawData;
     private StringToStringsMap reqHeaders;
-    private RestRequestParamsPropertyHolder reqParams;
+    private def reqParams;
 
-
-    CurlGenerator( WsdlTestRunContext context, RestTestRequest request, Logger log, String curlParams){
+    /**
+    * @brief Default constructor
+    *
+    * @param context - test run context
+    * @param messageExchange - message exchange availabe in a assertion script
+    * @param log - Logger
+    * @param curlParams - cURL params that will be placed at the begining of cmd
+    */
+    CurlGenerator( WsdlTestRunContext context, RestResponseMessageExchange messageExchange, Logger log, String curlParams ) {
         this.context = context;
-        this.request = request;
+        this.messageExchange = messageExchange;
         this.log = log;
 
         if ( this.context.getCurrentStep().isDisabled() == false ) {
@@ -39,32 +47,36 @@ class CurlGenerator{
     }
 
 
-    CurlGenerator( WsdlTestRunContext context, RestTestRequest request, Logger log) {
-        this(context, request, log, "ki");
+    /**
+    * @brief Another constructor, this one will use "-ki" as default cURL params
+    *
+    */
+    CurlGenerator( WsdlTestRunContext context, RestResponseMessageExchange messageExchange, Logger log) {
+        this(context, messageExchange, log, "ki");
     }
 
 
+    /**
+    * @brief Init method that gets all the needed data from context and msgExchng
+    *
+    */
     private void init() {
-        this.testCaseName = context.getCurrentStep().getLabel();
-        this.reqHttpMethod = request.getMethod();
+        this.request = messageExchange.getRestRequest();
+        this.testCaseName = this.context.getCurrentStep().getLabel();
+        this.reqHttpMethod = this.request.getMethod();
         
         // gets the req body if there's one
         // if not the an empty List is returned
-        this.reqContent = (request.hasRequestBody()) ? request.getRequestContent() : ""; 
-        this.reqParams = request.params;
+        this.reqContent = (this.request.hasRequestBody()) ? this.context.expand(this.request.getRequestContent()) : ""; 
 
-        // alt. way to get the URI:
-        // context.getProperty("httpMethod").URI.toString();
-        //this.reqUri = context.getProperty("httpMethod").URI.toString();
-        this.reqContext = context.getProperties().requestUri;
-        this.reqEndpoint = context.expand(request.getEndpoint());
-        
-        log.info "REQUEST HEADERS: " + this.request.getRequestHeaders(); // WHY THERE ARE NO HEADERS?????
+        this.reqParams = this.request.getProperties();
+
+        this.reqContext = this.context.expand(this.request.getResource().getFullPath());
+        this.reqEndpoint = this.context.expand(this.request.getEndpoint());
 
         // get request headers
         // works only when request is made manually for the second time, in other case it will be always [:]
         this.reqHeaders = (request.getResponse() != null) ? request.getResponse().getRequestHeaders() : [:];
-        
         this.reqRawData = (request.getResponse() != null) ? request.getResponse().getRawRequestData() : [];
     }
 
@@ -101,8 +113,8 @@ class CurlGenerator{
     private String getCurl(String curlParams)
     {
         String params = ( curlParams.isEmpty() ) ? "" : "-" + curlParams;
-        String cmd = "curl %s %s \"%s\" %s %s";
-        return String.format(cmd, params, getMethod(), getUri(), getHeaders(), getContent());
+        String cmd = "curl %s %s \"%s%s\" %s %s";
+        return String.format(cmd, params, getMethod(), getUri(), getParams(), getHeaders(), getContent());
     }
 
 
@@ -110,6 +122,39 @@ class CurlGenerator{
         return this.reqRawData;
     }
 
+    /**
+    * @brief return a list of maps of sent non-empty query parameters
+    *
+    * @return return a list of maps of sent non-empty query parameters
+    */
+    private List getSentParams(){
+        List params = [];
+        this.reqParams.each{
+            k,v ->
+                if ( !v.getValue().isEmpty() )  {
+                    def param = [ "name": v.getName(), "val" :  context.expand( v.getValue() ) ]
+                    params.push( param )
+            }
+        }
+        return params;
+    }
+
+    /**
+    * @brief Converts list of query params into a nicely formatted string
+    *
+    * @return A string representing all the query params
+    */
+    private String getParams(){
+        String qp = "";
+        if ( false == getSentParams().isEmpty() ) {
+            getSentParams().each{
+                p ->
+                // insert ? when processing first param, else insert & 
+                    qp += ( qp  == "" ) ? "?" + p.name + "=" + p.val : "&" + p.name + "=" + p.val;
+            }
+        }
+        return qp;
+    }
 
     private String getMethod(){
         return "-X" + reqHttpMethod;

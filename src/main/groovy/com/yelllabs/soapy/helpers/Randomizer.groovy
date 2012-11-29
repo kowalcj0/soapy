@@ -21,7 +21,7 @@ class Randomizer {
   */
   public static Integer randRange(int Min, int Max)
   {
-    return ( Min < Max ) ? ( Min + (int)(Math.random() * ((Max - Min) + 1)) ) : null;
+    return ( Min <= Max ) ? ( Min + (int)(Math.random() * ((Max - Min) + 1)) ) : null;
   }
 
   /**
@@ -34,7 +34,7 @@ class Randomizer {
   */
   public static Double randRange( double Min, double Max )
   {
-    return ( Min<Max ) ? Min + (double)(Math.random() * ((Max - Min) )) : null;
+    return ( Min<=Max ) ? Min + (double)(Math.random() * ((Max - Min) )) : null;
     //return ( Min<Max && Min>=0 && Min<1 && Max>0 && Max<=1 ) ? ( Min + (double)(Math.random() * ((Max - Min) )) ) : null;
   }
 

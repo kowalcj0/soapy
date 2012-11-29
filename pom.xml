@@ -226,6 +226,8 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
+                            <!-- This will put the final jar in ./resources/libs directory of soapui-runner -->
+                            <outputFile>jar/soapy-1.0.jar</outputFile>
                             <artifactSet>
                                 <excludes>
                                     <exclude>junit:*</exclude>

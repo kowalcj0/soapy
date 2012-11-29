@@ -18,8 +18,8 @@ class JSONHandler {
     private static Logger log;
 
     JSONHandler( Logger log ) {
-    this.parser = new JSONParser();
-    this.log = log;
+        this.parser = new JSONParser();
+        this.log = log;
     }
 
     JSONHandler() {
@@ -36,13 +36,14 @@ class JSONHandler {
     * @return If exception was found then JSON.INVALID enum is returned;
     */
     public Object parse( String jsonText ) {
-    try {
-        return this.parser.parse( jsonText );
-    } catch( ParseException pe ) {
-        log.error " While parsing the text at position: " + pe.getPosition();
-        log.info pe;
-        return JSON.INVALID;
-    }
+        try {
+            return this.parser.parse( jsonText );
+        } catch( ParseException pe ) {
+            log.error " While parsing the text at position: " + pe.getPosition();
+            log.info pe;
+            //assert false, pe;
+            return (JSON)JSON.INVALID;
+        }
     }
 
 
@@ -73,7 +74,10 @@ class JSONHandler {
        return JSON.OBJECT;
      } else if ( jsonObject instanceof JSONArray ) {
        return JSON.ARRAY;
-     } else if ( !(jsonObject instanceof JSONArray) || !(jsonObject instanceof JSONObject) ) {
+     } else if ( !(jsonObject instanceof JSONArray) && !(jsonObject instanceof JSONObject) && !(jsonObject instanceof com.yelllabs.soapy.enums.JSON) && !(jsonObject instanceof Enum) ) {
+         //Class cls = jsonObject.getClass();  
+         //log.info("The type of the object is: " + cls.getName()); 
+
        // for more details refer to :
        // http://code.google.com/p/tests.json-simple/source/browse/branches/mavenization/src/main/java/org/tests.json/simple/parser/JSONParser.java
        // Generally, JSONParse method return Instance of the following:
