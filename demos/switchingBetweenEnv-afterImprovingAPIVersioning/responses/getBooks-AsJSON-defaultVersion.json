@@ -1,0 +1,42 @@
+{
+	"REQUEST" : {
+		"METHOD" : "GET",
+		"CONTEXT" : "books",
+		"RESOURCE" : "books",
+		"HEADERS" : {
+			"Accept" : "application/json"
+		},
+		"ISBODYPRESENT" : false
+	},
+	"RESPONSE" : {
+		"CODE" : 200,
+		"HEADERS" : {
+			"Content-Type" : "application/json"
+		},
+		"BODY" : {
+				   "version" : "3",
+				   "books":    [
+						{
+						 "id": 1,
+						 "title": "Book no 1"
+					  	},
+						{
+						 "id": 2,
+						 "title": "Book no 2"
+					  	},
+						{
+						 "id": 3,
+						 "title": "Book no 3"
+					  	},
+						{
+						 "id": 4,
+						 "title": "Book no 4"
+					  	},
+						{
+						 "id": 5,
+						 "title": "Book no 5"
+					  	}
+				   ]
+		}
+	}
+}

@@ -1,0 +1,21 @@
+{
+	"REQUEST" : {
+		"METHOD" : "GET",
+		"HEADERS" : {
+			"Accept" : "application/vnd.soapui.books.book-v3+xml"
+		},
+		"CONTEXT" : "books/book",
+		"RESOURCE" : "2",
+		"ISBODYPRESENT" : false
+	},
+	"RESPONSE" : {
+		"CODE" : 200,
+		"HEADERS" : {
+			"Content-Type" : "application/vnd.soapui.books.book-v3+xml"
+		},
+		"BODY" : "<Response xmlns=\"https://localhost/books/book/2\">
+    <id>2</id>
+   <title>This is book no 2</title>
+</Response>"
+	}
+}

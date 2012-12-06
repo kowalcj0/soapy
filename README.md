@@ -13,7 +13,9 @@ To run a single story (one contained in a etsy_cart.story file):
     mvn install -DstoryFilter=i_can_parse_json_array
     mvn install -DstoryFilter=i_can_parse_json_value
 
-
+## Building documentation
+To build GroovyDocs for this project, simply run this profile:
+mvn package -P groovy-docs 
 
 ## Including Xeger lib
 

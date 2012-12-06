@@ -1,0 +1,41 @@
+{
+	"REQUEST" : {
+		"METHOD" : "GET",
+		"CONTEXT" : "books",
+		"RESOURCE" : "books",
+		"HEADERS" : {
+			"Accept" : "application/vnd.soapui.books.book-v2+xml"
+		},
+		"ISBODYPRESENT" : false
+	},
+	"RESPONSE" : {
+		"CODE" : 200,
+		"HEADERS" : {
+			"Content-Type" : "application/vnd.soapui.books.book-v2+xml"
+		},
+		"BODY" : "<Response xmlns=\"https://localhost/books\">
+  <books>
+    <book>
+      <id>1</id>
+         <title>This is book no 1</title>
+    </book>
+    <book>
+      <id>2</id>
+         <title>This is book no 2</title>
+    </book>
+    <book>
+      <id>3</id>
+         <title>This is book no 3</title>
+    </book>
+    <book>
+      <id>4</id>
+         <title>This is book no 4</title>
+    </book>
+    <book>
+      <id>5</id>
+         <title>This is book no 5</title>
+    </book>
+  </books>
+</Response>"
+	}
+}

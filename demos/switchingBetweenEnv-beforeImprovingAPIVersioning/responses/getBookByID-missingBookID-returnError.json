@@ -1,0 +1,19 @@
+{
+	"REQUEST" : {
+		"METHOD" : "GET",
+		"HEADERS" : {},
+		"CONTEXT" : "books/book",
+		"RESOURCE" : "",
+		"ISBODYPRESENT" : false
+	},
+	"RESPONSE" : {
+		"CODE" : 400,
+		"HEADERS" : {
+			"Content-Type" : "application/json"
+		},
+		"BODY" : {
+			  "errCode" : "001", 
+			  "errMsg" : "Something went wrong. Check if your request is a valid one!"
+		}
+	}
+}

@@ -12,3 +12,6 @@
 /logs
 /target
 /.idea
+
+#ctags file
+tags
