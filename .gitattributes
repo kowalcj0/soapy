@@ -1,0 +1,3 @@
+# mark all soapui projects files as binary files
+# to avoid mess when running a diff
+*.xml -diff
