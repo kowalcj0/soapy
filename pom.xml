@@ -22,7 +22,7 @@
     <repositories>
         <repository>
             <id>eviwarePluginRepository</id>
-            <url>http://www.soapui.org/repository/maven2/</url>
+            <url>http://www.soapui.org/repository/maven2</url>
         </repository>
     </repositories>
 
@@ -238,7 +238,7 @@
                                     <exclude>commons-lang:*</exclude>
                                     <exclude>org.slf4j:*</exclude>
                                     <exclude>org.jbehave:*</exclude>
-                                    <!--<exclude>org.jbehave.site:*</exclude>-->
+                                    <exclude>org.jbehave.site:*</exclude>
                                     <exclude>org.codehaus.groovy:*</exclude>
                                     <exclude>org.hamcrest:*</exclude>
                                     <exclude>org.codehaus.plexus:*</exclude>
@@ -276,7 +276,7 @@
                                                 <path refid="maven.compile.classpath" />
                                             </classpath>
                                         </taskdef>
-                                        <Groovydoc destdir="groovydoc" sourcepath="src/main/groovy" packagenames="**.*" use="true" windowtitle="Groovydoc" private="false" />
+                                        <Groovydoc destdir="groovydoc" sourcepath="src/main/groovy" stylesheetfile="src/main/resources/clean.css" packagenames="**.*" use="true" windowtitle="Groovydoc" private="false" />
                                     </tasks>
                                 </configuration>
                                 <goals>
