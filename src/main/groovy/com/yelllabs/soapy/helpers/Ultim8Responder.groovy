@@ -3,20 +3,20 @@ package com.yelllabs.soapy.helpers;
 import groovy.io.FileType;
 import com.yelllabs.soapy.json.JSONHandler;
 
-/*
+/**
  * @brief A helper class to quickly create simple REST Mock APIs
  * @author Janusz Kowalczyk (jk)
  * @created 2012-11-28 (jk)
  * @modified 2012-11-28 (jk)
- * @docs:
+ * @SeeAlso
  *   http://www.soapui.org/apidocs/com/eviware/soapui/impl/wsdl/mock/WsdlMockRequest.html
  *   http://www.soapui.org/apidocs/com/eviware/soapui/impl/wsdl/mock/WsdlMockRunner.html
- * @todo:
+ * @ToDo:
  *  - send pretty response
  *  - fails to calculate response content length when response body it too large
  *  - clean-up the code
  *  - in-memory DB to store a filename to request triggers mapping: http://hsqldb.org/ or http://www.h2database.com/html/features.html#in_memory_databases
- * @examples
+ * @example
  *   curl -ki  http://localhost:8088/deals/deal/1 -H "Accept:application/vnd.soapui.deals.deal-v2+json" -H "ENV:DEV" -XGET
  *   curl -ki  http://localhost:8088/deals/deal/2 -H "Accept:application/vnd.soapui.deals.deal-v2+json" -H "ENV:DEV"  -XGET
  *   curl -ki  http://localhost:8088/deals/deal/878 -H "Accept:application/xml" -H "ENV:DEV"  -XGET
@@ -24,7 +24,7 @@ import com.yelllabs.soapy.json.JSONHandler;
  *   curl -ki  http://localhost:8088/deals -H "Accept:application/vnd.soapui.deals.deal-v2+json" -H "ENV:DEV"  -XGET
  * 
  */
-class Ultim8Reponder{
+class Ultim8Responder{
     private def log;
     private def context;
     private def req;
@@ -42,7 +42,7 @@ class Ultim8Reponder{
      *      Remember to provide the response dir as a relative path to the project directory
      * 
      */
-    Ultim8Reponder(def log,def context, def mockRequest, def mockRunner, String CFG_RESP_DIR, String CFG_PROJ_DIR, String CFG_NO_MATCHING_RESPONSE, String CFG_MORE_THAN_ONE_MATCHING_RESPONSE){
+    Ultim8Responder(def log,def context, def mockRequest, def mockRunner, String CFG_RESP_DIR, String CFG_PROJ_DIR, String CFG_NO_MATCHING_RESPONSE, String CFG_MORE_THAN_ONE_MATCHING_RESPONSE){
         this.log = log;
         this.context = context;
         this.req = mockRequest;
@@ -60,7 +60,7 @@ class Ultim8Reponder{
      * @brief Overloaded simplified constructor that uses all default settings
      * 
      */
-    Ultim8Reponder(def log,def context, def mockRequest, def mockRunner){
+    Ultim8Responder(def log,def context, def mockRequest, def mockRunner){
         this(log,
             context, 
             mockRequest, 
@@ -77,7 +77,7 @@ class Ultim8Reponder{
      *      Remember to provide the response dir as a relative path to the project directory
      * 
      */
-    Ultim8Reponder(def log,def context, def mockRequest, def mockRunner, String CFG_RESP_DIR ){
+    Ultim8Responder(def log,def context, def mockRequest, def mockRunner, String CFG_RESP_DIR ){
         this(log,
             context, 
             mockRequest, 

@@ -22,7 +22,7 @@
     <repositories>
         <repository>
             <id>eviwarePluginRepository</id>
-            <url>http://www.soapui.org/repository/maven2</url>
+            <url>http://www.eviware.com/repository/maven2/</url>
         </repository>
     </repositories>
 
@@ -255,7 +255,6 @@
         </plugins>
     </build>
 
-    <!-- to generated docs simply run: mvn package -P groovy-docs -->
     <profiles>
         <profile>
             <id>groovy-docs</id>
@@ -265,6 +264,9 @@
             <build>
                 <plugins>
                     <plugin>
+                        <configuration>
+                            <stylesheetfile>${basedir}/src/main/resources/stylesheet.css</stylesheetfile>
+                        </configuration>
                         <artifactId>maven-antrun-plugin</artifactId>
                         <executions>
                             <execution>
@@ -276,7 +278,8 @@
                                                 <path refid="maven.compile.classpath" />
                                             </classpath>
                                         </taskdef>
-                                        <Groovydoc destdir="groovydoc" sourcepath="src/main/groovy" stylesheetfile="src/main/resources/clean.css" packagenames="**.*" use="true" windowtitle="Groovydoc" private="false" />
+
+                                        <Groovydoc destdir="groovydoc" sourcepath="src/main/groovy" packagenames="**.*" use="true" windowtitle="Groovydoc" private="false" stylesheetfile="src/main/resources/groovydoc-stylesheet-blue.css"/>
                                     </tasks>
                                 </configuration>
                                 <goals>
