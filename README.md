@@ -41,7 +41,7 @@ In case you'd like to run them selectively use:
 ```bash
     mvn install -DstoryFilter=i_can_parse_json_array
     mvn install -DstoryFilter=i_can_parse_json_value
-```bash
+```
 
 
 ## Generate documentation
