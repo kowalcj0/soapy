@@ -279,7 +279,7 @@
                                             </classpath>
                                         </taskdef>
 
-                                        <Groovydoc destdir="groovydoc" sourcepath="src/main/groovy" packagenames="**.*" use="true" windowtitle="Groovydoc" private="false" stylesheetfile="src/main/resources/groovydoc-stylesheet-blue.css"/>
+                                        <Groovydoc destdir="docs" sourcepath="src/main/groovy" packagenames="**.*" use="true" windowtitle="Groovydoc" private="false" stylesheetfile="src/main/resources/groovydoc-stylesheet-blue.css"/>
                                     </tasks>
                                 </configuration>
                                 <goals>
